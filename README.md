@@ -1,1 +1,1 @@
-# Discord GMmod Addon v2
+# Discord GMod Addon v2

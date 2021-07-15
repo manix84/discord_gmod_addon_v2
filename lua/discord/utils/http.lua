@@ -1,4 +1,4 @@
-function httpFetch(req, params, callback, tries)
+function botRequest(request, params, callback, tries)
   local defaultTries = 3;
   local endpoint  = GetConVar("discord_bot_endpoint"):GetString();
   local chatName  = GetConVar("discord_chat_name"):GetString();
@@ -6,23 +6,35 @@ function httpFetch(req, params, callback, tries)
 
   if (not tries) then tries = defaultTries; end
 
-  http.Fetch(endpoint .. "/" .. req, function(res)
-    local resTable = util.JSONToTable(res)
-    if (resTable.error and resTable.error.msg) then
+  http.Fetch(endpoint .. "/" .. request, function(response)
+    local responseTable = util.JSONToTable(response)
+    if (responseTable.error and responseTable.error.msg) then
       print("[" .. chatName .. "][Error] " .. resTable.error.msg);
     end
-    callback(resTable);
+    callback(responseTable);
   end, function(err)
-    print("[" .. chatName .. "] Request to bot failed to respond. Is the bot running? Or is the URL correct?");
+    print("[" .. chatName .. "] Request to bot failed to respond. The Discord Bot may be offline, or the connection is blocked.");
     print("[" .. chatName .. "][Error] " .. err);
 
     if (tries ~= 0) then
       timer.Simple((((tries - default) + 1) * 0.5), function()
-        httpFetch(req, params, callback, tries - 1);
+        httpFetch(request, params, callback, tries - 1);
       end)
     end
   end, {
     ["authorization"] = "BEARER " .. authToken,
     ["params"] = util.TableToJSON(params)
   });
+end
+
+function botAction(action, targetPly, callback, reason)
+  local discordServerID = GetConVar("discord_server_id"):GetString();
+  local steamUserID = targetPly:SteamID64();
+  return botRequest(
+    "servers/" .. discordServerID .. "/users/" .. steamUserID .. "/" .. action,
+    {
+      "reason": reason
+    },
+    callback
+  );
 end

@@ -1,10 +1,11 @@
 AddCSLuaFile();
 
-resource.AddFile("materials/icon256/mute.png");
+CreateClientConVar("discord_show_mute_icon", true, true, false, "Sets the node bot endpoint.");
 
-shouldDrawMute = false;
+resource.AddFile("materials/icon256/mute.png");
 muteIconAsset = Material("materials/icon256/mute.png", "smooth mips");
 
+shouldDrawMute = false;
 net.Receive("drawMute", function()
   shouldDrawMute = net.ReadBool();
 end);

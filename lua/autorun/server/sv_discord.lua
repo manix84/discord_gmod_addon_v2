@@ -1,5 +1,6 @@
 CreateConVar("discord_bot_endpoint", "http://localhost:3000", FCVAR_PROTECTED, "Sets the node bot endpoint.");
 CreateConVar("discord_auth_token", "", FCVAR_PROTECTED, "Sets the node bot api-key.");
+CreateConVar("discord_debug", 0, FCVAR_PROTECTED, "Print debug messages to console.");
 
 CreateConVar("discord_chat_name", "Discord", FCVAR_NOTIFY, "Sets the Plugin Prefix for helpermessages (eg: \"[Discord] You've been muted.\").");
 CreateConVar("discord_server_link", "", FCVAR_NOTIFY, "Sets the Discord server your bot is present on (eg: https://discord.gg/aBc123).");

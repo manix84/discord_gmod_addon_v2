@@ -36,43 +36,42 @@ end
 
 -- Action Functions --
 ----------------------
-function mutePlayer(targetPly, reason)
-  bot:playerAction(targetPly, "mute", { reason }, function(res) end);
+local function mutePlayer(targetPly, reason)
+  bot:playerAction(targetPly, "mute", { reason }, function(res)
+    drawMuteIcon(targetPly, true);
+  end);
 end
 
-function unmutePlayer(targetPly, reason)
-  bot:playerAction(targetPly, "unmute", { reason }, function(res) end);
+local function unmutePlayer(targetPly, reason)
+  bot:playerAction(targetPly, "unmute", { reason }, function(res)
+    drawMuteIcon(targetPly, false);
+  end);
 end
 
-function deafenPlayer(targetPly, reason)
-  bot:playerAction(targetPly, "deafen", { reason }, function(res) end);
+local function deafenPlayer(targetPly, reason)
+  bot:playerAction(targetPly, "deafen", { reason }, function(res)
+    drawDeafenIcon(targetPly, true);
+  end);
 end
 
-function undeafenPlayer(targetPly, reason)
-  bot:playerAction(targetPly, "undeafen", { reason }, function(res) end);
+local function undeafenPlayer(targetPly, reason)
+  bot:playerAction(targetPly, "undeafen", { reason }, function(res)
+    drawDeafenIcon(targetPly, false);
+  end);
 end
 
-function muteAllPlayers(reason)
+local function unmuteAllPlayers(reason)
   for i, targetPly in ipairs(player.GetAll()) do
-    bot:playerAction(targetPly, "mute", { reason }, function(res) end);
-  end
-end
-
-function unmuteAllPlayers(reason)
-  for i, targetPly in ipairs(player.GetAll()) do
+    drawMuteIcon(targetPly, true);
     bot:playerAction(targetPly, "unmute", { reason }, function(res) end);
   end
 end
 
-function deafenAllPlayers(reason)
+local function undeafenAllPlayers(reason)
   for i, targetPly in ipairs(player.GetAll()) do
-    bot:playerAction(targetPly, "deafen", { reason }, function(res) end);
-  end
-end
-
-function undeafenAllPlayers(reason)
-  for i, targetPly in ipairs(player.GetAll()) do
-    bot:playerAction(targetPly, "undeafen", { reason }, function(res) end);
+    bot:playerAction(targetPly, "undeafen", { reason }, function(res)
+      drawDeafenIcon(targetPly, false);
+    end);
   end
 end
 

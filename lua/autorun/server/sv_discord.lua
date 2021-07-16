@@ -37,25 +37,25 @@ end
 -- Action Functions --
 ----------------------
 local function mutePlayer(targetPly, reason)
-  bot:playerAction(targetPly, "mute", { reason }, function(res)
+  bot:playerAction(targetPly, "mute", { reason = reason }, function(res)
     drawMuteIcon(targetPly, true);
   end);
 end
 
 local function unmutePlayer(targetPly, reason)
-  bot:playerAction(targetPly, "unmute", { reason }, function(res)
+  bot:playerAction(targetPly, "unmute", { reason = reason }, function(res)
     drawMuteIcon(targetPly, false);
   end);
 end
 
 local function deafenPlayer(targetPly, reason)
-  bot:playerAction(targetPly, "deafen", { reason }, function(res)
+  bot:playerAction(targetPly, "deafen", { reason = reason }, function(res)
     drawDeafenIcon(targetPly, true);
   end);
 end
 
 local function undeafenPlayer(targetPly, reason)
-  bot:playerAction(targetPly, "undeafen", { reason }, function(res)
+  bot:playerAction(targetPly, "undeafen", { reason = reason }, function(res)
     drawDeafenIcon(targetPly, false);
   end);
 end
@@ -63,13 +63,13 @@ end
 local function unmuteAllPlayers(reason)
   for i, targetPly in ipairs(player.GetAll()) do
     drawMuteIcon(targetPly, true);
-    bot:playerAction(targetPly, "unmute", { reason }, function(res) end);
+    bot:playerAction(targetPly, "unmute", { reason = reason }, function(res) end);
   end
 end
 
 local function undeafenAllPlayers(reason)
   for i, targetPly in ipairs(player.GetAll()) do
-    bot:playerAction(targetPly, "undeafen", { reason }, function(res)
+    bot:playerAction(targetPly, "undeafen", { reason = reason }, function(res)
       drawDeafenIcon(targetPly, false);
     end);
   end

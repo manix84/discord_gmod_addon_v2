@@ -119,7 +119,6 @@ end);
 
 hook.Add("PlayerInitialSpawn", "Discord_PlayerInitialSpawn", function(targetPly)
   if (targetPly:IsBot()) then return; end;
-  PrintMessage(HUD_PRINTCENTER, "[" .. GetConVar("discord_chat_name"):GetString() .. "] Welcome.");
 end);
 
 hook.Add("PlayerSpawn", "Discord_PlayerSpawn", function(targetPly)

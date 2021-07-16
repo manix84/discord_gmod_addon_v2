@@ -17,7 +17,7 @@ function botRequest(request, params, callback, tries)
     print("[" .. chatName .. "][Error] " .. err);
 
     if (tries ~= 0) then
-      timer.Simple((((tries - default) + 1) * 0.5), function()
+      timer.Simple(((tries - default) + 1) * 0.5, function()
         httpFetch(request, params, callback, tries - 1);
       end)
     end
@@ -27,13 +27,13 @@ function botRequest(request, params, callback, tries)
   });
 end
 
-function botAction(action, targetPly, callback, reason)
+function botPlayerAction(action, targetPly, callback, reason)
   local discordServerID = GetConVar("discord_server_id"):GetString();
   local steamUserID = targetPly:SteamID64();
   return botRequest(
     "servers/" .. discordServerID .. "/users/" .. steamUserID .. "/" .. action,
     {
-      "reason": reason
+      reason = reason
     },
     callback
   );

@@ -24,13 +24,13 @@ local muteIconAsset = Material("materials/icon" .. imgSize .. "/mute.png", "smoo
 local deafenIconAsset = Material("materials/icon" .. imgSize .. "/deafen.png", "smooth mips");
 
 
-local shouldDrawMuteIcon = true;
-net.Receive("drawMute", function()
+local shouldDrawMuteIcon = false;
+net.Receive("drawMuteIcon", function()
   shouldDrawMuteIcon = net.ReadBool();
 end);
 
-local shouldDrawDeafenIcon = true;
-net.Receive("drawdeafen", function()
+local shouldDrawDeafenIcon = false;
+net.Receive("drawDeafenIcon", function()
   shouldDrawDeafenIcon = net.ReadBool();
 end);
 

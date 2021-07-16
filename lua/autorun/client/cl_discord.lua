@@ -6,16 +6,16 @@ local imgSize = 64
 local imgSpace = imgSize / 8;
 
 local img1 = {
-  xO = imgSpace,
-  yO = imgSpace,
-  xD = imgSize + imgSpace,
-  yD = imgSize + imgSpace
+  x = imgSpace,
+  y = imgSpace,
+  w = imgSize,
+  h = imgSize
 };
 local img2 = {
-  xO = (imgSpace * 2) + imgSize,
-  yO = imgSpace,
-  xD = imgSize + imgSpace,
-  yD = imgSize + imgSpace
+  x = (imgSpace * 2) + imgSize,
+  y = imgSpace,
+  w = imgSize,
+  h = imgSize
 };
 
 resource.AddFile("materials/icon" .. imgSize .. "/mute.png");
@@ -42,16 +42,16 @@ hook.Add("HUDPaint", "Discord_HUDPaint", function()
   local muteIcon = surface;
   if (shouldDrawMuteIcon) then
     muteIcon.SetMaterial(muteIconAsset);
-    muteIcon.DrawTexturedRect(img1.xO, img1.yO, img1.xD, img1.yD);
+    muteIcon.DrawTexturedRect(img1.x, img1.y, img1.w, img1.h);
   end
 
   local deafenIcon = surface;
   if (shouldDrawDeafenIcon) then
     deafenIcon.SetMaterial(deafenIconAsset);
     if (not shouldDrawMuteIcon) then
-      deafenIcon.DrawTexturedRect(img1.xO, img1.yO, img1.xD, img1.yD);
+      deafenIcon.DrawTexturedRect(img1.x, img1.y, img1.w, img1.h);
     else
-      deafenIcon.DrawTexturedRect(img2.xO, img2.yO, img2.xD, img2.yD);
+      deafenIcon.DrawTexturedRect(img2.x, img2.y, img2.w, img2.h);
     end
   end
 end);

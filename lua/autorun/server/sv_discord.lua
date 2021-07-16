@@ -1,12 +1,14 @@
 CreateConVar("discord_bot_endpoint", "http://localhost:3000", FCVAR_PROTECTED, "Sets the node bot endpoint. Unless you're self-hosting, don't change this.");
 CreateConVar("discord_auth_token", "", FCVAR_PROTECTED, "The Auth Token, used for communication with the bot. (https://github.com/manix84/discord_gmod_addon_v2/wiki/Getting-an-Auth-Token)");
 CreateConVar("discord_server_id", "", FCVAR_PROTECTED, "The Discord ID for your Guild. (https://github.com/manix84/discord_gmod_addon_v2/wiki/Finding-your-Guild-ID-(Server-ID))");
-CreateConVar("discord_debug", false, FCVAR_PROTECTED, "Print debug messages to console. Helps diagnose annoying issues.");
+CreateConVar("discord_debug", 0, FCVAR_PROTECTED, "Print debug messages to console. Helps diagnose annoying issues.");
 
 CreateConVar("discord_chat_name", "Discord", FCVAR_NOTIFY, "Sets the Plugin Prefix for helpermessages (eg: `[Discord] You've been muted.`).");
 CreateConVar("discord_server_link", "", FCVAR_NOTIFY, "Sets the Discord server your bot is present on (eg: https://discord.gg/aBc123).");
-CreateConVar("discord_mute_round", true, FCVAR_NOTIFY, "Mute the player until the end of the round.", 0, 1);
+CreateConVar("discord_mute_round", 1, FCVAR_NOTIFY, "Mute the player until the end of the round.", 0, 1);
 CreateConVar("discord_mute_duration", 5, FCVAR_NOTIFY, "Sets how long, in seconds, you are muted for after death. No effect if mute_round is on. ", 1, 720);
+
+include("discord/utils/bot.lua");
 
 function drawMuteIcon(target_ply, drawMute)
   net.Start("drawMute");
@@ -71,10 +73,11 @@ end);
 ----------------
 hook.Add("PlayerSay", "Discord_PlayerSay", function(target_ply, msg)
   if (string.sub(msg, 1, 9) ~= "!discord ") then return; end
-  linkToken = string.sub(msg, 10);
+  local linkToken = string.sub(msg, 10);
   botRequest("link", {
-    link_token: linkToken
-  }, function(res) end);
+    link_token = linkToken
+  }, function(res)
+  end);
 
   return "";
 end);

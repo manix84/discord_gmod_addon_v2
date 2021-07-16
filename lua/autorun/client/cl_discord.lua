@@ -1,6 +1,6 @@
 AddCSLuaFile();
 
-CreateClientConVar("discord_show_mute_icon", true, true, false, "Sets the node bot endpoint.");
+CreateClientConVar("discord_show_mute_icon", 1, true, false, "Should show the mute/deafen icons.");
 
 resource.AddFile("materials/icon256/mute.png");
 muteIconAsset = Material("materials/icon256/mute.png", "smooth mips");

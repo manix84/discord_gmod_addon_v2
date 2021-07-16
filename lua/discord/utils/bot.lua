@@ -1,4 +1,6 @@
-function botRequest(request, params, callback, tries)
+bot = {};
+
+function bot:request(request, params, callback, tries)
   local defaultTries = 3;
   local endpoint  = GetConVar("discord_bot_endpoint"):GetString();
   local chatName  = GetConVar("discord_chat_name"):GetString();
@@ -27,14 +29,12 @@ function botRequest(request, params, callback, tries)
   });
 end
 
-function botPlayerAction(action, targetPly, callback, reason)
+function bot:playerAction(targetPly, action, params, callback)
   local discordServerID = GetConVar("discord_server_id"):GetString();
   local steamUserID = targetPly:SteamID64();
   return botRequest(
     "servers/" .. discordServerID .. "/users/" .. steamUserID .. "/" .. action,
-    {
-      reason = reason
-    },
+    params,
     callback
   );
 end

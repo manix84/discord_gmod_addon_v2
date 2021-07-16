@@ -19,26 +19,43 @@ end
 -- Action Functions --
 ----------------------
 function mutePlayer(targetPly, reason)
-  botAction("mute", targetPly, function(res) end, reason);
-end
-
-function muteAllPlayers(targetPly, reason)
---   botAction("muteAll", targetPly, function(res) end, reason);
+  bot:playerAction(targetPly, "mute", { reason }, function(res) end);
 end
 
 function unmutePlayer(targetPly, reason)
-  botAction("unmute", targetPly, function(res) end, reason);
-end
-function unmuteAllPlayers(targetPly, reason)
---   botAction("unmuteAll", targetPly, function(res) end, reason);
+  bot:playerAction(targetPly, "unmute", { reason }, function(res) end);
 end
 
 function deafenPlayer(targetPly, reason)
-  botAction("deafen", targetPly, function(res) end, reason);
+  bot:playerAction(targetPly, "deafen", { reason }, function(res) end);
 end
 
 function undeafenPlayer(targetPly, reason)
-  botAction("undeafen", targetPly, function(res) end, reason);
+  bot:playerAction(targetPly, "undeafen", { reason }, function(res) end);
+end
+
+function muteAllPlayers(reason)
+  for i, targetPly in ipairs(player.GetAll()) do
+    bot:playerAction(targetPly, "mute", { reason }, function(res) end);
+  end
+end
+
+function unmuteAllPlayers(reason)
+  for i, targetPly in ipairs(player.GetAll()) do
+    bot:playerAction(targetPly, "unmute", { reason }, function(res) end);
+  end
+end
+
+function deafenAllPlayers(reason)
+  for i, targetPly in ipairs(player.GetAll()) do
+    bot:playerAction(targetPly, "deafen", { reason }, function(res) end);
+  end
+end
+
+function undeafenAllPlayers(reason)
+  for i, targetPly in ipairs(player.GetAll()) do
+    bot:playerAction(targetPly, "undeafen", { reason }, function(res) end);
+  end
 end
 
 -- Discord Muter Hooks --
@@ -74,7 +91,7 @@ end);
 hook.Add("PlayerSay", "Discord_PlayerSay", function(target_ply, msg)
   if (string.sub(msg, 1, 9) ~= "!discord ") then return; end
   local linkToken = string.sub(msg, 10);
-  botRequest("link", {
+  bot:request("link", {
     link_token = linkToken
   }, function(res)
   end);

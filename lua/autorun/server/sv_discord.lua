@@ -77,35 +77,36 @@ end
 
 -- Discord Muter Hooks --
 -------------------------
-hook.Add("MutePlayer", "Discord_MutePlayer", function(target_ply, reason, duration)
-  mutePlayer(target_ply, reason);
+hook.Add("MutePlayer", "Discord_MutePlayer", function(targetPly, reason, duration)
+  mutePlayer(targetPly, reason);
   if (duration > 0) then
     timer.Simple(duration, function()
-      unmutePlayer(target_ply, "Unmuted after " .. duration .. " seconds");
+      unmutePlayer(targetPly, "Unmuted after " .. duration .. " seconds");
     end);
   end
 end);
 
-hook.Add("UnmutePlayer", "Discord_UnmutePlayer", function(target_ply, reason)
-  unmutePlayer(target_ply, reason);
+hook.Add("UnmutePlayer", "Discord_UnmutePlayer", function(targetPly, reason)
+  unmutePlayer(targetPly, reason);
 end);
 
-hook.Add("DeafenPlayer", "Discord_MutePlayer", function(target_ply, reason, duration)
-  deafenPlayer(target_ply, reason);
+hook.Add("DeafenPlayer", "Discord_MutePlayer", function(targetPly, reason, duration)
+  deafenPlayer(targetPly, reason);
   if (duration > 0) then
     timer.Simple(duration, function()
-      undeafenPlayer(target_ply, "Undeafened after " .. duration .. " seconds");
+      undeafenPlayer(targetPly, "Undeafened after " .. duration .. " seconds");
     end);
   end
 end);
 
-hook.Add("UndeafenPlayer", "Discord_UnmutePlayer", function(target_ply, reason)
-  undeafenPlayer(target_ply, reason);
+hook.Add("UndeafenPlayer", "Discord_UnmutePlayer", function(targetPly, reason)
+  undeafenPlayer(targetPly, reason);
 end);
 
 -- Game Hooks --
 ----------------
-hook.Add("PlayerSay", "Discord_PlayerSay", function(target_ply, msg)
+hook.Add("PlayerSay", "Discord_PlayerSay", function(targetPly, msg)
+  if (targetPly:IsBot()) then return; end;
   if (string.sub(msg, 1, 9) ~= "!discord ") then return; end
   local linkToken = string.sub(msg, 10);
   bot:request("link", {
@@ -116,50 +117,61 @@ hook.Add("PlayerSay", "Discord_PlayerSay", function(target_ply, msg)
   return "";
 end);
 
-hook.Add("PlayerInitialSpawn", "Discord_PlayerInitialSpawn", function(target_ply)
-  playerMessage("WELCOME_CONNECTED", target_ply);
+hook.Add("PlayerInitialSpawn", "Discord_PlayerInitialSpawn", function(targetPly)
+  if (targetPly:IsBot()) then return; end;
+  PrintMessage(HUD_PRINTCENTER, "[" .. GetConVar("discord_chat_name"):GetString() .. "] Welcome.");
 end);
 
-hook.Add("PlayerSpawn", "Discord_PlayerSpawn", function(target_ply)
-  unmutePlayer(target_ply, "Player Spawn");
+hook.Add("PlayerSpawn", "Discord_PlayerSpawn", function(targetPly)
+  if (targetPly:IsBot()) then return; end;
+  unmutePlayer(targetPly, "Player Spawn");
+  undeafenPlayer(targetPly, "Player Spawn");
 end);
 
-hook.Add("PlayerDisconnected", "Discord_PlayerDisconnected", function(target_ply)
-  unmutePlayer(target_ply, "Played Disconnected");
+hook.Add("PlayerDisconnected", "Discord_PlayerDisconnected", function(targetPly)
+  if (targetPly:IsBot()) then return; end;
+  unmutePlayer(targetPly, "Played Disconnected");
+  undeafenPlayer(targetPly, "Played Disconnected");
 end);
 
 hook.Add("ShutDown", "Discord_ShutDown", function()
   unmuteAllPlayers("Server Shutdown");
+  undeafenAllPlayers("Server Shutdown");
 end);
 
 hook.Add("OnEndRound", "Discord_OnEndRound", function()
   timer.Simple(0.1, function()
     unmuteAllPlayers("Round Ended");
+    undeafenAllPlayers("Round Ended");
   end);
 end);
 
 hook.Add("TTTEndRound", "Discord_TTTEndRound", function()
   timer.Simple(0.1, function()
     unmuteAllPlayers("Round Ended");
+    undeafenAllPlayers("Round Ended");
   end);
 end);
 
 hook.Add("OnStartRound", "Discord_OnStartRound", function()
   unmuteAllPlayers("Round Started");
+  undeafenAllPlayers("Round Started");
 end);
 
 hook.Add("TTTBeginRound", "Discord_TTTBeginRound", function()
   unmuteAllPlayers("Round Started");
+  undeafenAllPlayers("Round Started");
 end);
 
-hook.Add("PostPlayerDeath", "Discord_PostPlayerDeath", function(target_ply)
+hook.Add("PostPlayerDeath", "Discord_PostPlayerDeath", function(targetPly)
+  if (targetPly:IsBot()) then return; end;
   local muteWholeRound = GetConVar("discord_mute_round"):GetBool();
   local duration = GetConVar("discord_mute_duration"):GetInt();
   if (commonRoundState() == 1) then
-    mutePlayer(target_ply, "Player was killed");
+    mutePlayer(targetPly, "Player was killed");
     if (not muteWholeRound) then
       timer.Simple(duration, function()
-        unmutePlayer(target_ply, "Unmuted after " .. duration .. " seconds");
+        unmutePlayer(targetPly, "Unmuted after " .. duration .. " seconds");
       end);
     end
   end

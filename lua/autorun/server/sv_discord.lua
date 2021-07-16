@@ -8,12 +8,23 @@ CreateConVar("discord_server_link", "", FCVAR_NOTIFY, "Sets the Discord server y
 CreateConVar("discord_mute_round", 1, FCVAR_NOTIFY, "Mute the player until the end of the round.", 0, 1);
 CreateConVar("discord_mute_duration", 5, FCVAR_NOTIFY, "Sets how long, in seconds, you are muted for after death. No effect if mute_round is on. ", 1, 720);
 
+util.AddNetworkString("drawMuteIcon");
+util.AddNetworkString("drawDeafenIcon");
+
 include("discord/utils/bot.lua");
 
-function drawMuteIcon(target_ply, drawMute)
-  net.Start("drawMute");
-  net.WriteBool(drawMute);
-  net.Send(target_ply);
+-- Generic Functions --
+-----------------------
+local function drawMuteIcon(targetPly, shouldDrawMute)
+  net.Start("drawMuteIcon");
+  net.WriteBool(shouldDrawMute);
+  net.Send(targetPly);
+end
+local function drawDeafenIcon(targetPly, shouldDrawDeafen)
+  net.Start("drawDeafenIcon");
+  net.WriteBool(shouldDrawDeafen);
+  net.Send(targetPly);
+end
 end
 
 -- Action Functions --

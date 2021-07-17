@@ -11,7 +11,7 @@ CreateConVar("discord_mute_duration", 5, FCVAR_NOTIFY, "Sets how long, in second
 util.AddNetworkString("drawMuteIcon");
 util.AddNetworkString("drawDeafenIcon");
 
-include("discord/utils/bot.lua");
+include("discord/utils/sv_bot.lua");
 
 -- Generic Functions --
 -----------------------

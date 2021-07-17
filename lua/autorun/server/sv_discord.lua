@@ -81,7 +81,7 @@ hook.Add("MutePlayer", "Discord_MutePlayer", function(targetPly, reason, duratio
   mutePlayer(targetPly, reason);
   if (duration > 0) then
     timer.Simple(duration, function()
-      unmutePlayer(targetPly, "Unmuted after " .. duration .. " seconds");
+      unmutePlayer(targetPly, "Un-muted after " .. duration .. " seconds");
     end);
   end
 end);
@@ -94,7 +94,7 @@ hook.Add("DeafenPlayer", "Discord_MutePlayer", function(targetPly, reason, durat
   deafenPlayer(targetPly, reason);
   if (duration > 0) then
     timer.Simple(duration, function()
-      undeafenPlayer(targetPly, "Undeafened after " .. duration .. " seconds");
+      undeafenPlayer(targetPly, "Un-deafened after " .. duration .. " seconds");
     end);
   end
 end);
@@ -170,7 +170,7 @@ hook.Add("PostPlayerDeath", "Discord_PostPlayerDeath", function(targetPly)
     mutePlayer(targetPly, "Player was killed");
     if (not muteWholeRound) then
       timer.Simple(duration, function()
-        unmutePlayer(targetPly, "Unmuted after " .. duration .. " seconds");
+        unmutePlayer(targetPly, "Un-muted after " .. duration .. " seconds");
       end);
     end
   end

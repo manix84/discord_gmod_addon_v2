@@ -21,17 +21,23 @@ function ulx.discordDeafen(callingPly, targetPlys, duration, shouldUndeafen)
       );
     end
 
-    ulx.fancyLogAdmin(
-      callingPly, "#A deafened #T for #i seconds", targetPlys, duration
-    );
+    if (duration > 0) then
+      ulx.fancyLogAdmin(
+        callingPly, "#A deafened #T for #i seconds", targetPlys, duration
+      );
+    else
+      ulx.fancyLogAdmin(
+        callingPly, "#A deafened #T until the round ends", targetPlys
+      );
+    end
   end
 end
 
 local discordDeafen = ulx.command(
   CATEGORY_NAME,
-  "ulx deafen",
+  "ulx deaf",
   ulx.discordDeafen,
-  "!deafen"
+  "!deaf"
 );
 
 discordDeafen:addParam{
@@ -51,7 +57,7 @@ discordDeafen:addParam{
   invisible = true
 };
 
-discordDeafen:setOpposite("ulx undeafen", {_, _, _, true}, "!undeafen");
+discordDeafen:setOpposite("ulx undeaf", {_, _, _, true}, "!undeaf");
 
 discordDeafen:defaultAccess(ULib.ACCESS_OPERATOR);
 discordDeafen:help("Deafen and un-deafen the player in Discord");

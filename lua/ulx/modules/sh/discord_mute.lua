@@ -21,9 +21,15 @@ function ulx.discordMute(callingPly, targetPlys, duration, shouldUnmute)
       );
     end
 
-    ulx.fancyLogAdmin(
-      callingPly, "#A muted #T for #i seconds", targetPlys, duration
-    );
+    if (duration > 0) then
+      ulx.fancyLogAdmin(
+        callingPly, "#A muted #T for #i seconds", targetPlys, duration
+      );
+    else
+      ulx.fancyLogAdmin(
+        callingPly, "#A muted #T until the round ends", targetPlys
+      );
+    end
   end
 end
 

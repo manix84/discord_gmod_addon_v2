@@ -10,7 +10,7 @@ function ulx.discordDeafen(callingPly, targetPlys, duration, shouldUndeafen)
     end
 
     ulx.fancyLogAdmin(
-      callingPly, "#A un-deafend #T", targetPlys
+      callingPly, "#A un-deafened #T", targetPlys
     );
   else
     for i = 1, #targetPlys do
@@ -22,7 +22,7 @@ function ulx.discordDeafen(callingPly, targetPlys, duration, shouldUndeafen)
     end
 
     ulx.fancyLogAdmin(
-      callingPly, "#A deafend #T for #i seconds", targetPlys, duration
+      callingPly, "#A deafened #T for #i seconds", targetPlys, duration
     );
   end
 end

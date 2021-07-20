@@ -152,7 +152,7 @@ end);
 
 hook.Add("PlayerSay", "Discord_PlayerSay", function(targetPly, msg)
   if (targetPly:IsBot()) then return; end;
-  if (string.sub(msg, 1, 9) ~= "!discord ") then return; end
+  if (string.sub(msg, 1, 9) ~= "!muter ") then return; end
   local linkToken = string.sub(msg, 10);
   bot:playerAction(targetPly, "link", { linkToken = linkToken }, function(res)
     targetPly:PrintMessage("You're connected :)");

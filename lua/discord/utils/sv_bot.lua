@@ -53,8 +53,10 @@ end
 function bot:playerAction(targetPly, action, params, callback)
   if (targetPly:IsBot()) then return; end;
   local discordServerID = GetConVar("discord_server_id"):GetString();
+  local discordChannelID = GetConVar("discord_channel_id"):GetString();
   local steamUserID = targetPly:SteamID64();
   local route = "servers/" .. discordServerID ..
+                "/channels/" .. discordChannelID ..
                 "/users/" .. steamUserID ..
                 "/" .. action;
   return makeRequest(

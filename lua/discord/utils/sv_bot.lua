@@ -4,6 +4,7 @@ local get = "fetch";
 local function makeRequest(method, route, params, callback, tries)
   local defaultTries = 3;
   if (not tries) then tries = defaultTries; end
+  local tryCount = (tries - defaultTries) + 1;
 
   local endpoint  = GetConVar("discord_bot_endpoint"):GetString();
   local authToken = GetConVar("discord_auth_token"):GetString();
@@ -12,27 +13,20 @@ local function makeRequest(method, route, params, callback, tries)
   local authorization = "BEARER " .. authToken;
 
   local function onError(err)
-    print("[" .. chatName .. "] Request to bot failed to respond. The Discord Bot may be offline, or the connection is blocked.");
-    print("[" .. chatName .. "][Error] " .. err);
+    print("[" .. chatName .. "][" .. err.code .. "] " .. err.message);
   end
   local function onSuccess(body, _size, _headers, code)
+    local bodyTable = util.JSONToTable(body)
     if (code ~= 200) then
-      onError(url .. " [" .. code .. "]");
+      onError(bodyTable.error)
       return;
     end;
-    print(url .. " [" .. code .. "]");
-    print(body);
-
-    local bodyTable = util.JSONToTable(body)
-    if (bodyTable.error and bodyTable.error.msg) then
-      print("[" .. chatName .. "][Error] " .. resTable.error.msg);
-    end
     callback(bodyTable);
   end
   local function onFailure(err)
-    onError(err)
+    print("[" .. chatName .. "][Try " .. tryCount .. "] Request to bot failed to respond. The Discord Bot may be offline, or the connection is blocked.");
     if (tries ~= 0) then
-      timer.Simple(((tries - defaultTries) + 1) * 0.5, function()
+      timer.Simple(tryCount * 0.3, function()
         makeRequest(method, route, params, callback, tries - 1);
       end)
     end

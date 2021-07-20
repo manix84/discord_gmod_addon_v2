@@ -1,6 +1,7 @@
 CreateConVar("discord_bot_endpoint", "https://discord-muter.herokuapp.com", FCVAR_PROTECTED, "Sets the node bot endpoint. Unless you're self-hosting, don't change this.");
 CreateConVar("discord_auth_token", "", FCVAR_PROTECTED, "The Auth Token, used for communication with the bot. (https://github.com/manix84/discord_gmod_addon_v2/wiki/Getting-an-Auth-Token)");
 CreateConVar("discord_server_id", "", FCVAR_PROTECTED, "The Discord ID for your Guild. (https://github.com/manix84/discord_gmod_addon_v2/wiki/Finding-your-Guild-ID-(Server-ID))");
+CreateConVar("discord_channel_id", "", FCVAR_PROTECTED, "The Discord ID for the channel you want to mute/deafen. (https://github.com/manix84/discord_gmod_addon_v2/wiki/Finding-your-Channel-ID)");
 CreateConVar("discord_debug", 0, FCVAR_PROTECTED, "Print debug messages to console. Helps diagnose annoying issues.");
 
 CreateConVar("discord_name", "Discord", FCVAR_NOTIFY, "Sets the Plugin Prefix for helpermessages (eg: `[Discocrd] You've been muted.`).");

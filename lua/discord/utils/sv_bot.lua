@@ -32,7 +32,7 @@ local function makeRequest(method, route, params, callback, tries)
   local function onFailure(err)
     onError(err)
     if (tries ~= 0) then
-      timer.Simple(((tries - default) + 1) * 0.5, function()
+      timer.Simple(((tries - defaultTries) + 1) * 0.5, function()
         makeRequest(method, route, params, callback, tries - 1);
       end)
     end

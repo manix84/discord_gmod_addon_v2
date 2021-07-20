@@ -3,7 +3,7 @@ CreateConVar("discord_auth_token", "", FCVAR_PROTECTED, "The Auth Token, used fo
 CreateConVar("discord_server_id", "", FCVAR_PROTECTED, "The Discord ID for your Guild. (https://github.com/manix84/discord_gmod_addon_v2/wiki/Finding-your-Guild-ID-(Server-ID))");
 CreateConVar("discord_debug", 0, FCVAR_PROTECTED, "Print debug messages to console. Helps diagnose annoying issues.");
 
-CreateConVar("discord_chat_name", "Discord", FCVAR_NOTIFY, "Sets the Plugin Prefix for helpermessages (eg: `[Discord] You've been muted.`).");
+CreateConVar("discord_name", "Discord", FCVAR_NOTIFY, "Sets the Plugin Prefix for helpermessages (eg: `[Discocrd] You've been muted.`).");
 CreateConVar("discord_server_link", "", FCVAR_NOTIFY, "Sets the Discord server your bot is present on (eg: https://discord.gg/aBc123).");
 CreateConVar("discord_mute_round", 1, FCVAR_NOTIFY, "Mute the player until the end of the round.", 0, 1);
 CreateConVar("discord_mute_duration", 5, FCVAR_NOTIFY, "Sets how long, in seconds, you are muted for after death. No effect if mute_round is on. ", 1, 720);

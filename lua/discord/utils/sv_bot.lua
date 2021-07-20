@@ -4,7 +4,7 @@ local get = "fetch";
 local function makeRequest(method, route, params, callback, tries)
   local defaultTries = 3;
   if (not tries) then tries = defaultTries; end
-  local tryCount = (tries - defaultTries) + 1;
+  local tryCount = (defaultTries - tries) + 1;
 
   local endpoint  = GetConVar("discord_bot_endpoint"):GetString();
   local authToken = GetConVar("discord_auth_token"):GetString();

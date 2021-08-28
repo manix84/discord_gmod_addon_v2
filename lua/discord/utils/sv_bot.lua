@@ -1,5 +1,6 @@
 local post = "post";
 local get = "fetch";
+local connectionDelayMultiplier = 0.3;
 
 local function makeRequest(method, route, params, callback, tries)
   local defaultTries = 3;
@@ -26,7 +27,7 @@ local function makeRequest(method, route, params, callback, tries)
   local function onFailure(err)
     print("[" .. chatName .. "][Try " .. tryCount .. "] Request to bot failed to respond. The Discord Bot may be offline, or the connection is blocked.");
     if (tries ~= 0) then
-      timer.Simple(tryCount * 0.3, function()
+      timer.Simple(tryCount * connectionDelayMultiplier, function()
         makeRequest(method, route, params, callback, tries - 1);
       end)
     end
